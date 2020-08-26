@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sys_user">
+
+    <!--账号的添加-->
+    <update id="addUser" parameterType="HashMap">
+        INSERT INTO SYS_USER(KID, USER_NAME) VALUES (#{kid},#{user_name})
+    </update>
+
+    <!-- 密码的添加 -->
+    <update id="addUserPassword" parameterType="HashMap">
+        INSERT INTO BACKEND_MASTER.SYS_USER_PASSWORD(USER_ID,USER_PASSWORD) VALUES (#{kid},#{user_password})
+    </update>
+
+    <!-- shiro认证 -->
+    <select id="userLoginShiro" resultType="String" parameterType="HashMap">
+        SELECT su.kid FROM sys_user su,sys_user_password sup WHERE sup.user_password = #{password} AND su.user_name = #{username} AND su.kid = sup.user_id LIMIT 1
+    </select>
+</mapper>
